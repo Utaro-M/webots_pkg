@@ -1,0 +1,6 @@
+<launch>
+  <group ns="kxrl4_urdf" >
+  <node pkg="webots_pkg" name="test" type="motion.py" output="screen"/>
+  <node pkg="webots_pkg" name="test_main" type="main.py" output="screen"/>
+  </group>
+</launch>
