@@ -34,6 +34,7 @@ class RosMain(object):
         for c in contours:
             print c.m00
         M = contours[0]
+        result = 'turn_left' ## initialize result
         if M:
             m00 = M.m00
             m10 = M.m10
@@ -96,7 +97,8 @@ if __name__ == '__main__':
     rm = RosMain()
 
     #sm = smach_def.create_state_machine(count=1000, lib=rm)
-    sm = smach_def.create_layerd_state_machine(count=1000, lib=rm)
+    # sm = smach_def.create_layerd_state_machine(count=1000, lib=rm)
+    sm = smach_def.test_state_machine(count=1000, lib=rm)
 
     sis = smach_ros.IntrospectionServer('server_name', sm, '/SM_ROOT')
     sis.start()

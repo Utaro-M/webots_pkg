@@ -81,6 +81,29 @@ def create_state_machine(count = 0, lib = None):
 
     return sm
 
+def test_state_machine(count = 0, lib = None):
+    smach.set_loggers(smach.loginfo, smach.logwarn, log_none, smach.logerr)
+
+    sm = smach.StateMachine(outcomes=['finish', 'other_state'])
+
+    with sm:
+        # smach.StateMachine.add('detect_state', detect_state(lib.detect_trash),
+        #                        transitions={'move_forward':'move_forward_state',
+        #                                     'turn_left'   :'turn_left_state',
+        #                                     'turn_right'  :'turn_right_state',
+        #                                     'other_state' :'other_state',
+        #                                     'finish'      :'finish'} )
+        smach.StateMachine.add('swim_forward_state', move_forward_state(lib.swim_forward),
+                               transitions={'to_next':'swim_forward_state'})
+
+        # smach.StateMachine.add('move_forward_state', move_forward_state(lib.move_forward),
+        #                        transitions={'to_next':'move_forward_state'})
+
+    sm.userdata.counter = count
+    sm.userdata.lib = 'lib'
+
+    return sm
+
 def create_layerd_state_machine(count = 0, lib = None):
     smach.set_loggers(smach.loginfo, smach.logwarn, log_none, smach.logerr)
 
