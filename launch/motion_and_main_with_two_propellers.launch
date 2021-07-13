@@ -1,0 +1,7 @@
+<launch>
+  <group ns="kxrl4_urdf" >
+    <node pkg="webots_pkg" name="test" type="motion_with_two_propellers.py" output="screen"/>
+    <node pkg="webots_pkg" name="test_main" type="main_with_two_propellers.py" output="screen"/>
+  </group>
+  <include file="$(find webots_pkg)/launch/sample_recognition.launch" />
+</launch>
