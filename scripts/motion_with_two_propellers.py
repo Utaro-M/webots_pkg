@@ -18,29 +18,6 @@ rbw = None
 lbw = None
 propeller_left = None
 propeller_right = None
-# def stop_moving():
-#     lfw.setVelocity(0.0)
-#     lbw.setVelocity(0.0)
-#     rfw.setVelocity(0.0)
-#     rbw.setVelocity(0.0)
-
-# def move_forward():
-#     lfw.setVelocity(4.0)
-#     lbw.setVelocity(4.0)
-#     rfw.setVelocity(-4.0)
-#     rbw.setVelocity(-4.0)
-
-# def turn_right():
-#     lfw.setVelocity(2.0)
-#     lbw.setVelocity(2.0)
-#     rfw.setVelocity(2.0)
-#     rbw.setVelocity(2.0)
-
-# def turn_right():
-#     lfw.setVelocity(-2.0)
-#     lbw.setVelocity(-2.0)
-#     rfw.setVelocity(-2.0)
-#     rbw.setVelocity(-2.0)
 
 def motion_callback(msg):
     motion = msg.data
@@ -57,6 +34,9 @@ def motion_callback(msg):
         lbw.setVelocity(4.0)
         rfw.setVelocity(-4.0)
         rbw.setVelocity(-4.0)
+    elif motion =='move_back':
+        propeller_left.setVelocity(20.0)
+        propeller_right.setVelocity(20.0)        
     elif motion == 'turn_right':
         # turn_right()
         # lfw.setVelocity(2.0)
@@ -124,7 +104,7 @@ if __name__ == '__main__':
     if 'neck_p' in rc.device_map:
         neck_p = rc.device_map['neck_p']
         neck_p.setPosition(-0.6)
-#add
+
     if 'propeller_motor_left' in rc.device_map:
         propeller_left = rc.device_map['propeller_motor_left']
         propeller_left.setPosition(float('inf'))

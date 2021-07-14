@@ -48,12 +48,9 @@ class RosMain(object):
                 diff = 10
                 if xpos > (160 + diff):
                     result = 'turn_right'
-                    # result = 'turn_right_with_move_forward'
                 elif xpos < (160 - diff):
                     result = 'turn_left'
-                    # result = 'turn_left_with_move_forward'
                 else:
-                    # result = 'move_forward'
                     result = 'swim_forward'
         return result
 
@@ -67,17 +64,26 @@ class RosMain(object):
         return result
 
     def detect_goal(self):
+        global collected_counter
         result = 'turn_left'
         if self.goal_detect_result:
             contours = self.goal_detect_result
             self.goal_detect_result = None
             result = self.position_of_main_area(contours)
+            if result == 'other_state':
+                collected_counter +=1
+                print"collected_counter +1"
         return result
 
     def move_forward(self):
         self.pub.publish('move_forward')
         for i in range(self.motion_count):
             self.rate.sleep()
+
+    def move_back(self):
+        self.pub.publish('move_back')
+        for i in range(self.motion_count):
+            self.rate.sleep()      
 
     def turn_left(self):
         self.pub.publish('turn_left')
@@ -88,18 +94,6 @@ class RosMain(object):
         self.pub.publish('turn_right')
         for i in range(self.motion_count):
             self.rate.sleep()
-
-    def turn_left_with_move_forward(self):
-        self.pub.publish('turn_left')
-        for i in range(self.motion_count):
-            self.rate.sleep()
-        # self.swim_forward()
-
-    def turn_right_with_move_forward(self):
-        self.pub.publish('turn_right')
-        for i in range(self.motion_count):
-            self.rate.sleep()
-        # self.swim_forward()
 
     def swim_forward(self):
         self.pub.publish('swim_forward')
@@ -113,8 +107,8 @@ if __name__ == '__main__':
 
     #sm = smach_def.create_state_machine(count=1000, lib=rm)
     sm = smach_def_with_two_propellers.create_layerd_state_machine(count=1000, lib=rm)
+    #motion test
     # sm = smach_def_with_two_propellers.test_state_machine(count=1000, lib=rm)
-
     sis = smach_ros.IntrospectionServer('server_name', sm, '/SM_ROOT')
     sis.start()
     rospy.sleep(1)

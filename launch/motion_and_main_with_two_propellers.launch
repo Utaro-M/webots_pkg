@@ -3,5 +3,6 @@
     <node pkg="webots_pkg" name="test" type="motion_with_two_propellers.py" output="screen"/>
     <node pkg="webots_pkg" name="test_main" type="main_with_two_propellers.py" output="screen"/>
   </group>
+  <node pkg="smach_viewer" name="test_smach" type="smach_viewer.py" output="screen"/>
   <include file="$(find webots_pkg)/launch/sample_recognition.launch" />
 </launch>
